@@ -1,43 +1,46 @@
+import axios from "axios";
 import BookCard from "../BookCard/BookCard";
 import styles from "./BookSearch.module.scss";
 import { useState } from "react";
-
 
 interface IVolumeInfo {
   title: string;
   authors?: string[];
   description?: string;
-  imageLinks?: {
-    thumbnail?: string;
+  imageLinks: {
+    thumbnail: string;
   };
 }
 
-interface Book {
+interface IBook {
   id: string;
   volumeInfo: IVolumeInfo;
 }
 
 function BookSearch() {
   const [query, setQuery] = useState<string>("");
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<IBook[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const apiKey = process.env.REACT_APP_BOOK_API;
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  require("dotenv").config();
 
-  const handleSearch = async () => {
+  const apiKey = import.meta.env.VITE_APP_BOOK_API;
+  const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+  async function searchBooks(query: string) {
+    const url = `${baseUrl}?q=${encodeURIComponent(query)}&key=${apiKey}`;
+
     try {
-      const response = await fetch(`${baseUrl}?q=${query}&key=${apiKey}`);
-      const data = await response.json();
-      setBooks(data.items);
-    } catch (error: any) {
-      setError(error.message);
+      const response = await axios.get(url);
+      setBooks(response.data.items);
+    } catch (error) {
+      setError("Error fetching data");
+      console.error("Error fetching data:", error);
     }
-  };
+  }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      handleSearch();
+      searchBooks(query);
     }
   };
 
@@ -53,24 +56,21 @@ function BookSearch() {
           className={styles.searchForm__form__input}
         />
         <button
-          onClick={handleSearch}
+          onClick={() => searchBooks(query)}
           className={styles.searchForm__form__button}
         >
           Search
         </button>
       </div>
-
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>} {}
       <ul className={styles.searchForm__ul}>
-        {books.map(({ id, volumeInfo }: Book) => (
+        {books.map(({ id, volumeInfo }: IBook) => (
           <li key={id} className={styles.searchForm__ul__li}>
             <BookCard
               title={volumeInfo.title}
               authors={volumeInfo.authors || []}
               description={volumeInfo.description}
-              imageLinks={
-                volumeInfo.imageLinks ? volumeInfo.imageLinks : undefined
-              }
+              imageLinks={volumeInfo.imageLinks?.thumbnail}
             />
           </li>
         ))}
