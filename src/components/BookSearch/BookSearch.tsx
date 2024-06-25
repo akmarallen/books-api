@@ -21,19 +21,22 @@ function BookSearch() {
   const [books, setBooks] = useState<Book[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const API_KEY = "AIzaSyAhrLu2CIeppeBC8nfGj3mnmrwauGbhYB0";
-  const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
-  console.log();
+  console.log(process.env.REACT_APP_API_KEY);
+  console.log(process.env.REACT_APP_BASE_URL);
+
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`${BASE_URL}?q=${query}&key=${API_KEY}`);
+      const response = await fetch(`${baseUrl}?q=${query}&key=${apiKey}`);
       const data = await response.json();
       setBooks(data.items);
     } catch (error: any) {
       setError(error.message);
     }
   };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch();
@@ -58,6 +61,7 @@ function BookSearch() {
           Search
         </button>
       </div>
+
       {error && <p>{error}</p>}
       <ul className={styles.searchForm__ul}>
         {books.map(({ id, volumeInfo }: Book) => (
