@@ -1,0 +1,44 @@
+.bookСard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 300px;
+  height: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+
+  &__img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 290px;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  &__details {
+    margin-top: 20px;
+
+    & h2 {
+      margin-bottom: 10px;
+    }
+    &__description {
+      width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    & ul {
+      list-style-type: none;
+      padding: 0;
+
+      & li {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
