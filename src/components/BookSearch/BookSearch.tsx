@@ -2,6 +2,7 @@ import BookCard from "../BookCard/BookCard";
 import styles from "./BookSearch.module.scss";
 import { useState } from "react";
 
+
 interface IVolumeInfo {
   title: string;
   authors?: string[];
@@ -21,10 +22,7 @@ function BookSearch() {
   const [books, setBooks] = useState<Book[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  console.log(process.env.REACT_APP_API_KEY);
-  console.log(process.env.REACT_APP_BASE_URL);
-
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = process.env.REACT_APP_BOOK_API;
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleSearch = async () => {
