@@ -1,4 +1,4 @@
-import BookCard from "./BookCard/BookCard";
+import BookCard from "../BookCard/BookCard";
 import styles from "./BookSearch.module.scss";
 import { useState } from "react";
 
@@ -20,7 +20,6 @@ function BookSearch() {
   const [query, setQuery] = useState<string>("");
   const [books, setBooks] = useState<Book[]>([]);
   const [error, setError] = useState<string | null>(null);
-
 
   const API_KEY = "AIzaSyAhrLu2CIeppeBC8nfGj3mnmrwauGbhYB0";
   const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
