@@ -1,13 +1,13 @@
 import axios from "axios";
 import BookCard from "../BookCard/BookCard";
 import styles from "./BookSearch.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IVolumeInfo {
   title: string;
   authors?: string[];
   description?: string;
-  imageLinks?: {
+  imageLinks: {
     thumbnail: string;
   };
 }
@@ -17,37 +17,35 @@ interface IBook {
   volumeInfo: IVolumeInfo;
 }
 
-const apiKey = import.meta.env.local.VITE_APP_BOOK_API;
-const baseUrl = import.meta.env.local.VITE_APP_BASE_URL;
+const apiKey = import.meta.env.VITE_APP_BOOK_API;
+const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 
 function BookSearch() {
   const [search, setSearch] = useState<string>("");
   const [books, setBooks] = useState<IBook[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
-  };
-
-  const handleSearch = () =>
-    axios
-      .get(`${baseUrl}?q=${search}&key=${apiKey}`)
-      .then((res) => {
-        console.log(apiKey);
-        if (res.data.items) {
-          setBooks(res.data.items);
+  useEffect(() => {
+    const handleSearch = async () => {
+      try {
+        const response = await axios(`${baseUrl}?q=${search}&key=${apiKey}`);
+        if (response.data.items) {
+          setBooks(response.data.items);
         } else {
           setBooks([]);
           setError("No books found. Please try again.");
         }
-        console.log("Response:", res.data);
-      })
-      .catch((err) => {
+        console.log("Response:", response.data.items);
+      } catch (err) {
         console.error("Error:", err);
         setError("Failed to fetch books. Please try again.");
-      });
+      }
+    };
+
+    if (search.trim()) {
+      handleSearch();
+    }
+  }, [search]);
 
   return (
     <div className={styles.searchForm}>
@@ -56,12 +54,11 @@ function BookSearch() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={handleKeyDown}
           placeholder="Search for books"
           className={styles.searchForm__form__input}
         />
         <button
-          onClick={handleSearch}
+          onClick={() => setSearch(search)}
           className={styles.searchForm__form__button}
         >
           Search
@@ -75,7 +72,7 @@ function BookSearch() {
               title={volumeInfo.title}
               authors={volumeInfo.authors || []}
               description={volumeInfo.description}
-              // thumbnail={volumeInfo.imageLinks?.thumbnail}
+              imageLinks={volumeInfo.imageLinks}
             />
           </li>
         ))}
@@ -83,4 +80,5 @@ function BookSearch() {
     </div>
   );
 }
+
 export default BookSearch;

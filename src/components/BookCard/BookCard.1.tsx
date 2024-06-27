@@ -1,16 +1,8 @@
 import React from "react";
 import styles from "./BookCard.module.scss";
+import { BookCardProps } from "./BookCard";
 
-interface BookCardProps {
-  title: string;
-  authors?: string[];
-  description?: string;
-  imageLinks: {
-    thumbnail?: string;
-  };
-}
-
-const BookCard: React.FC<BookCardProps> = ({
+export const BookCard: React.FC<BookCardProps> = ({
   title,
   authors,
   description,
@@ -35,5 +27,3 @@ const BookCard: React.FC<BookCardProps> = ({
     </div>
   );
 };
-
-export default BookCard;
