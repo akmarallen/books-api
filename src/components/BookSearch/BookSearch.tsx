@@ -17,8 +17,8 @@ interface IBook {
   volumeInfo: IVolumeInfo;
 }
 
-const apiKey = import.meta.env.VITE_APP_BOOK_API;
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+const apiKey = import.meta.env.local.VITE_APP_BOOK_API;
+const baseUrl = import.meta.env.local.VITE_APP_BASE_URL;
 
 function BookSearch() {
   const [search, setSearch] = useState<string>("");
