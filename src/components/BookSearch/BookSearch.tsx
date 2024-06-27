@@ -41,7 +41,6 @@ function BookSearch() {
         setError("Failed to fetch books. Please try again.");
       }
     };
-
     if (search.trim()) {
       handleSearch();
     }
