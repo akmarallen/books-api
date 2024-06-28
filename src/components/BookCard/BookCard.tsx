@@ -16,10 +16,13 @@ const BookCard: React.FC<BookCardProps> = ({
   description,
   imageLinks,
 }) => {
-  const { thumbnail } = imageLinks;
   return (
     <div className={styles.bookСard}>
-      <img src={thumbnail} alt={title} className={styles.bookСard__img} />
+      <img
+        src={imageLinks?.thumbnail}
+        alt={title}
+        className={styles.bookСard__img}
+      />
       <div className={styles.bookСard__details}>
         <h2>{title}</h2>
         <p>Авторы:</p>

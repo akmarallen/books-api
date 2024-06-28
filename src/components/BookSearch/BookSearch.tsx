@@ -1,7 +1,7 @@
 import axios from "axios";
-import BookCard from "../BookCard/BookCard";
 import styles from "./BookSearch.module.scss";
 import { useEffect, useState } from "react";
+import BookCard from "../BookCard/BookCard";
 
 interface IVolumeInfo {
   title: string;
@@ -41,6 +41,7 @@ function BookSearch() {
         setError("Failed to fetch books. Please try again.");
       }
     };
+
     if (search.trim()) {
       handleSearch();
     }
