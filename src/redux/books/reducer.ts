@@ -7,11 +7,7 @@ const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 export const getBooks: any = createAsyncThunk(
   "books/getBooks",
   async (search: string) => {
-    const response = await axios.get(`${baseUrl}`, {
-      params: {
-        search,
-      },
-    });
+    const response = await axios.get(`${baseUrl}?q=${search}&key=${apiKey}`);
 
     return await response.data?.items;
   }

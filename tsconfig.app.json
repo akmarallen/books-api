@@ -20,7 +20,16 @@
     /* Linting */
     "strict": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["./src/*"],
+      "components/*": ["./src/components/*"],
+      "components": ["./src/components"],
+      "assets/*": ["./src/assets/*"],
+      "assets": ["./src/assets"]
+    }
   },
   "include": ["src"]
 }

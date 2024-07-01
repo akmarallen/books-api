@@ -1,21 +1,22 @@
 import styles from "./BookSearch.module.scss";
 import { useState } from "react";
-import BookCard from "../BookCard/BookCard";
-import { AppDispatch, RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "src/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { getBooks } from "../../redux/books/reducer";
+import { getBooks } from "src/redux/books/reducer";
+import { IBook } from "src/interfaces";
+import BookCard from "components/BookCard/BookCard";
 
 function BookSearch() {
   const [search, setSearch] = useState<string>("");
+
   const dispatch: AppDispatch = useDispatch();
+
   const { books, error, status } = useSelector(
     (state: RootState) => state.books
   );
 
   const handleSearch = () => {
-    if (search.trim()) {
-      dispatch(getBooks(search));
-    }
+    if (search.trim()) dispatch(getBooks(search));
   };
 
   return (
@@ -38,13 +39,13 @@ function BookSearch() {
       {status === "loading" && <p>Loading...</p>}
       {error && <p className={styles.error}>{error}</p>}
       <ul className={styles.searchForm__ul}>
-        {books.map(({ id, book }) => (
+        {books.map(({ id, volumeInfo }: IBook) => (
           <li key={id} className={styles.searchForm__ul__li}>
             <BookCard
-              title={book.title}
-              authors={book.authors || []}
-              description={book.description}
-              imageLinks={book.imageLinks}
+              title={volumeInfo.title}
+              authors={volumeInfo.authors || []}
+              description={volumeInfo.description}
+              imageLinks={volumeInfo.imageLinks}
             />
           </li>
         ))}

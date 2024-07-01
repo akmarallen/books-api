@@ -1,25 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { getBooks } from "./reducer";
+import { BookState } from "src/interfaces";
 
-interface IVolumeInfo {
-  title: string;
-  authors?: string[];
-  description?: string;
-  imageLinks: {
-    thumbnail: string;
-  };
-}
-
-export interface IBook {
-  id: string;
-  volumInfo: IVolumeInfo;
-}
-
-interface BookState {
-  books: IBook[];
-  error: any;
-  status: "idle" | "loading" | "succeed" | "failed";
-}
 
 const initialState: BookState = {
   books: [],
