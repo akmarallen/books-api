@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getBooks } from "./reducer";
 import { BookState } from "src/interfaces";
 
-
 const initialState: BookState = {
   books: [],
   error: null,
