@@ -11,7 +11,7 @@ function BookSearch() {
 
   const dispatch: AppDispatch = useDispatch();
 
-  const { books, error, status } = useSelector(
+  const { books = [], error, status } = useSelector(
     (state: RootState) => state.books
   );
 
